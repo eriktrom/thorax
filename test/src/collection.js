@@ -1,3 +1,22 @@
+describe("fetch", function() {
+  it("returns a promise", function() {
+    var server = sinon.fakeServer.create();
+    var collection = new (Thorax.Collection.extend({
+      url: '/test'
+    }))();
+
+    collection.fetch().done(function() {
+      expect(collection.models.length).to.equal(1);
+    });
+
+    server.requests[0].respond(
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify([{id: 1, text: "test"}])
+    );
+  });
+});
+
 describe('collection', function() {
   Handlebars.templates.letter = Handlebars.compile('{{collection tag="ul"}}');
   Handlebars.templates['letter-item'] = Handlebars.compile('<li>{{letter}}</li>');

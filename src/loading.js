@@ -285,7 +285,7 @@ function loadData(callback, failback, options) {
         failback && failback.call(self, false);
       });
 
-  this.fetch(_.defaults({
+  return this.fetch(_.defaults({
     success: successCallback,
     error: function() {
       successCallback.cancel();
@@ -322,7 +322,7 @@ function fetchQueue(options, $super) {
     // Handle callers that do not pass in a super class and wish to implement their own
     // fetch behavior
     if ($super) {
-      $super.call(this, options);
+      return $super.call(this, options);
     }
     return options;
   } else {
@@ -406,7 +406,7 @@ _.each(klasses, function(DataClass) {
         }
       }
 
-      loadData.call(this, callback, failback, options);
+      return loadData.call(this, callback, failback, options);
     }
   });
 });
