@@ -1,20 +1,89 @@
-describe("fetch", function() {
-  it("returns a promise", function() {
+describe('fetch-promise-bug', function () {
+
+
+  // Run async test first, cause otherwise timeout error won't bubble? :(
+
+  // async version
+  it('async returns a promise test', function (done) {
     var server = sinon.fakeServer.create();
+    var data = [{id: 1, text: "test"}];
+    // use server.respondWith before server.respond() to ensure request is async
+    server.respondWith('GET', '/test', [
+      200,
+      { "Content-Type": "application/json" },
+      JSON.stringify(data)
+    ]);
+
     var collection = new (Thorax.Collection.extend({
       url: '/test'
     }))();
 
     collection.fetch().done(function() {
-      expect(collection.models.length).to.equal(1);
+      // Fake XHR onreadystatechange handler threw exception: expected undefined to equal 'test'
+      // AssertionError: expected undefined to equal 'test'
+      expect(collection.models[0].text).to.equal("test"); // FAILS
+
+      expect(collection.models.length).to.equal(1); // PASS or not run??
+
+      // These two assertions are never run???
+      expect(false).to.eq("This block is never run"); // This never fails?
+      done(); // FAILS timeout of 2000ms exceeded, means done() is never run
+
+      // What is going on here?
     });
 
-    server.requests[0].respond(
-      200,
-      { "Content-Type": "application/json" },
-      JSON.stringify([{id: 1, text: "test"}])
-    );
+    // server.respond(); is async when called after server.respondWith (see sinon docs)
+    server.respond();
+    server.restore(); // we've made the response, let's cleanup
   });
+
+
+  // PASSES
+  // @eastridge original test
+  // it("returns a promise", function() {
+  //   var server = sinon.fakeServer.create();
+  //   // setup data
+  //   var collection = new (Thorax.Collection.extend({
+  //     url: '/test'
+  //   }))();
+
+  //   collection.fetch().done(function() {
+  //     expect(collection.models.length).to.equal(1); // PASS
+  //   });
+
+  //   server.requests[0].respond(
+  //     200,
+  //     { "Content-Type": "application/json" },
+  //     JSON.stringify([{id: 1, text: "test"}])
+  //   );
+  // });
+
+  // FAILS, expected undefined to equal 'test'
+  // this test is same as above, but check for property on model
+  // instead of collection.models.length, shows that model exists
+  // but has no data yet
+  // it("sync returns a promise, broken", function() {
+  //   var server = sinon.fakeServer.create();
+  //   var collection = new (Thorax.Collection.extend({
+  //     url: '/test'
+  //   }))();
+
+  //   collection.fetch().done(function() {
+  //     expect(collection.models.length).to.equal(1);
+  //     expect(collection.models[0].text).to.equal("test"); // CHANGED, fails
+  //     // ^^ fails with expected undefined to equial 'test', meaning there
+  //     // is no text property, meaning this test runs before server even responds
+  //   });
+
+  //   server.requests[0].respond(
+  //     200,
+  //     { "Content-Type": "application/json" },
+  //     JSON.stringify([{id: 1, text: "test"}])
+  //   );
+  // });
+
+
+
 });
 
 describe('collection', function() {
@@ -710,14 +779,14 @@ describe('collection view', function() {
     parent.render();
     expect(parent.getCollectionElement()[0]).to.equal(parent.$('div')[0]);
     expect(parent.getCollectionElement()[0]).to.not.equal(parent.child.getCollectionElement()[0]);
-  
+
     var parentWithCollectionHelper = new Thorax.View({
       collection: new Thorax.Collection([{key: 'value'}]),
       template: Handlebars.compile('{{#collection tag="ul"}}<li>{{key}}</li>{{/collection}}')
     });
     parentWithCollectionHelper.render();
     var parentCollectionView = parentWithCollectionHelper.children[_.keys(parentWithCollectionHelper.children)[0]];
-    
+
     var childWithCollectionHelper = new Thorax.View({
       collection: new Thorax.Collection([{key: 'value'}]),
       template: Handlebars.compile('{{#collection tag="ul" class="inner"}}<li>{{key}}</li>{{/collection}}')
