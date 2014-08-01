@@ -155,11 +155,11 @@ Then in your template:
     })
     layout.setView(view);
 
-## Server Side Render
+## Server Side Rendering
 
 Thorax allows for rendering outside of the normal browser context using environments such as [Fruit Loops][fruit-loops] or [PhantomJS][phantomjs] to render content in the initial server response and then restore the view hierarchy on the client render. Rendering in such a manner allows for Thorax applications to expose their content for SEO purposes as well as speed up the perceived initial page load.
 
-The restore process is well suited for handling distinctions between user and public data, allowing for the server response to include only public, long cacheable, content. The client can then augment this data with any user specific data on restoration.
+The restore process is well suited for handling distinctions between user and public data, allowing for the server response to include only public, long cache-able, content. The client can then augment this data with any user specific data on restoration.
 
 
 # Getting Started
@@ -187,7 +187,7 @@ See the [TodoMVC Thorax implementation](http://addyosmani.github.com/todomvc/lab
 
 The [Thorax Generator](https://github.com/walmartlabs/generator-thorax) will ask you questions before generating a new blank or predefined base project. This is the recommended way to get started.
 
-The [Thorax Generator](https://github.com/walmartlabs/generator-thorax) also provides it's own extensive documentation and aims to help you understand how to setup a full stack thorax application, including a minimal node express server and deployment instructions.
+The [Thorax Generator](https://github.com/walmartlabs/generator-thorax) also provides it's own extensive documentation and aims to help you understand how to setup a full stack Thorax application, including a minimal node express server and deployment instructions.
 
 ### Bower component
 
@@ -1368,7 +1368,7 @@ By default this calls `Thorax.onException` when an exception is thrown but imple
 
 Immediately executed version of `bindSection`. The default implementation delegates to `bindSection`.
 
-# Server Rendering
+## Server Rendering
 
 Server side rendering relies can be performed in any environment that supports the `$` API as well as a few core APIs used to control the page life cycle.
 
@@ -1378,7 +1378,7 @@ Server side rendering relies can be performed in any environment that supports t
 
 [Fruit Loops][fruit-loops] provides this functionality out of the box but this can be added to other environments with relative ease.
 
-## Restore Process
+### Restore Process
 
 The restore process involves walking the DOM hierarchy looking for nodes that are annotated with the `data-view-restore` attribute. When such a node is found Thorax will attempt to restore based on a variety of steps discussed in the [Restore Methods](#restore-methods) section below.
 
@@ -1397,7 +1397,7 @@ The application restore process might look something like:
 
 Followed by normal controller execution, ultimately culminating in `setView` call, which will restore the rendered child.
 
-## Restore Methods
+### Restore Methods
 
 There is no definitive algorithm for restoring views, instead the following heuristics are used. In the event of a mismatch the `restore:fail` event will be emitted on the candidate view with additional debugging information regarding what portion of the heuristic failed.
 
@@ -1474,57 +1474,57 @@ Since pending fetch operations might rerender the content of a just restored vie
 
 Note that there are issues that might arise if a different model data source is used on the client vs. the server, a personalized vs public data source for example. When such data is loaded prior to the restore operation, it might be necessary to provide a custom restore step that checks if this data has changed and rerender as there is no clean way for Thorax to determine if a model's data has changed between the two states.
 
-# Error Codes
+## Error Codes
 
-## button-trigger
+### button-trigger
 
 `button` helper must have a method name as the first argument or a 'trigger', or a 'method' attribute specified.
 
-## link-href
+### link-href
 
 `link` helper requires an href as the first argument or an `href` attribute.
 
-## collection-element-helper
+### collection-element-helper
 
 `collection-element` helper must be declared inside of a `CollectionView`
 
-## super-parent
+### super-parent
 
 Cannot use `super` helper when parent has no name or template.
 
-## view-helper-hash-args
+### view-helper-hash-args
 
 Hash arguments are not allowed in the `view` helper as templates should not introduce side effects to view instances.
 
-## layout-element-helper
+### layout-element-helper
 
 `layout-element` helper must be used within a `LayoutView`.
 
-## mixed-fetch
+### mixed-fetch
 
 Both `set` and `reset` were passed to `fetch`, must use one or the other.
 
-## nested-render
+### nested-render
 
 `render` was called which triggered an event handler which in turn called `render`. Infinite recursion was halted.
 
-## handlebars-no-data
+### handlebars-no-data
 
 Handlebars template compiled without data, use: `Handlebars.compile(template, {data: true})`
 
-## insert-destroyed
+### insert-destroyed
 
 A helper view that has been destroyed was inserted into the view.
 
-## void-tag-content
+### void-tag-content
 
 A void tag such as `img` was rendered with `content` in `Thorax.Util.tag`.
 
-## server-marshal-object
+### server-marshal-object
 
 A complex object was serialized without a proper context path to lookup the object on the client side. See [Thorax.ServerMarshal](#thoraxservermarshal) for more discussion on context paths.
 
-## fn-view-unregistered
+### fn-view-unregistered
 
 `$.view` found a view element that was inserted manually into the DOM and was not registered with `_addChild` or `retain`. Call `parent._addChild(view)` or `view.retain()` on view insertion or instantiation.
 
