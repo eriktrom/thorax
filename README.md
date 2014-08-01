@@ -1,5 +1,3 @@
-**The [Thorax Yeoman generator](https://github.com/walmartlabs/generator-thorax) is presently under active development and is the best way to get started with Thorax. The docs here will be updated shortly to reflect this.**
-
 # Thorax
 
 [![Selenium Test Status](https://saucelabs.com/buildstatus/thorax)](https://saucelabs.com/u/thorax)
@@ -8,7 +6,7 @@ An opinionated, battle tested [Backbone](http://backbonejs.org/) + [Handlebars](
 
 # Quick Start
 
-- Clone the [Seed Project](http://github.com/walmartlabs/thorax-seed) and start building your own application.
+- Generate your application using the [Thorax Yeoman Generator](https://github.com/walmartlabs/generator-thorax)
 - Read about how Thorax works in the new [Backbone Fundamentals Book](http://addyosmani.github.com/backbone-fundamentals/#thorax).
 - Install the [Thorax Inspector](https://chrome.google.com/webstore/detail/thorax-inspector/poioalbefcopgeaeaadelomciijaondk) Chrome extension.
 - Building something smaller? Just link the [core library](http://github.com/walmartlabs/thorax) as a [single file from cdnjs](http://cdnjs.cloudflare.com/ajax/libs/thorax/2.0.0rc6/thorax.js) compiled with all of its dependencies and use it anywhere or play with our [Hello World fiddle](http://jsfiddle.net/KRuPZ/) or [Todos fiddle](http://jsfiddle.net/mZzhy/).
@@ -168,9 +166,9 @@ The restore process is well suited for handling distinctions between user and pu
 
 ## Tutorials
 
-### [From zero to todos](https://github.com/walmartlabs/thorax-seed/blob/master/README.md)
+### [Thorax Yeoman Generator](https://github.com/walmartlabs/generator-thorax)
 
-Did you enjoy the [screencast](http://vimeo.com/60230630)? Learn how to build your own simple todos app from scratch, with [step by step explanations](https://github.com/walmartlabs/thorax-seed/blob/master/README.md) of how the app was built.
+Using the Thorax Generator, you can generate a Todos example application. You can also generate a blank application and build it out to match the Todos example app. This is a great way to learn by doing.
 
 ### [Thorax in Backbone Fundamentals](http://addyosmani.github.com/backbone-fundamentals/#thorax)
 
@@ -185,15 +183,11 @@ See the [TodoMVC Thorax implementation](http://addyosmani.github.com/todomvc/lab
 
 ## Resources
 
-### Seeds
+### Thorax Yeoman Generator
 
-Cloning a seed is the easiest way to get started building your own project.
+The [Thorax Generator](https://github.com/walmartlabs/generator-thorax) will ask you questions before generating a new blank or predefined base project. This is the recommended way to get started.
 
-- [Root Seed](https://github.com/walmartlabs/thorax-seed)
-- [with Mocha test harness](https://github.com/eastridge/thorax-seed-mocha)
-- [with simple Todos](https://github.com/eastridge/thorax-seed-todos)
-- [Rails Seed (zip)](https://github.com/walmartlabs/thorax-boilerplate/blob/master/rails.zip?raw=true)
-- [Standalone / HTML only Seed (zip)](https://github.com/walmartlabs/thorax-boilerplate/blob/master/standalone.zip?raw=true)
+The [Thorax Generator](https://github.com/walmartlabs/generator-thorax) also provides it's own extensive documentation and aims to help you understand how to setup a full stack thorax application, including a minimal node express server and deployment instructions.
 
 ### Bower component
 
@@ -219,10 +213,6 @@ Thorax is available on [cdnjs](http://cdnjs.com/), each build includes jQuery 1.
 - [Thorax (compressed)](http://cdnjs.cloudflare.com/ajax/libs/thorax/2.0.0rc6/thorax.min.js)
 - [Thorax Mobile](http://cdnjs.cloudflare.com/ajax/libs/thorax/2.0.0rc6/thorax-mobile.js)
 - [Thorax Mobile (compressed)](http://cdnjs.cloudflare.com/ajax/libs/thorax/2.0.0rc6/thorax-mobile.min.js)
-
-### Chrome Inspector Extension
-
-Chrome users can install the [Thorax Inspector](https://chrome.google.com/webstore/detail/thorax-inspector/poioalbefcopgeaeaadelomciijaondk) Chrome extension which will allow you to inspect any element and see the associated Thorax views, models and collections that may be bound. The [Thorax Seed](https://github.com/walmartlabs/thorax-seed) also integrates the [thorax-inspector](https://npmjs.org/package/thorax-inspector) npm package which allows you to open files in your project that relate to a given element, directly from Chrome.
 
 ### Playground
 
@@ -270,7 +260,7 @@ If a `name` property is passed to any Thorax classes' `extend` method the result
 
 ### templates *Handlebars.templates*
 
-A hash of templates, used by various Thorax helpers. If using the Lumbar or Rails boilerplate projects or the [Thorax Seed](http://github.com/walmartlabs/thorax-seed) this hash will be automatically generated from the files in your `templates` directories. To manually add a template to the hash:
+A hash of templates, used by various Thorax helpers. If using the Lumbar or Rails boilerplate projects or the [Thorax Generator](https://github.com/walmartlabs/generator-thorax) this hash will be automatically generated from the files in your `templates` directories. To manually add a template to the hash:
 
     Handlebars.templates['my-template-name'] = Handlebars.compile('template string');
 
